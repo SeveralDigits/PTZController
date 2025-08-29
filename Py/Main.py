@@ -1,22 +1,18 @@
 import clr
-clr.AddReference(r"C:\Users\Alexander\Desktop\LOGITECH PTZ\Lib\PTZ2.dll")
+from pathlib import Path
+
+script_dir = Path(__file__).parent
+dll_path = script_dir.parent / "Lib" / "PTZ2.dll"
+
+clr.AddReference(str(dll_path))
 from PTZ import PTZDevice, PTZType
 from tkinter import *
 
-camera_name = "Logi Group Camera"  # adjust to your camera name
+camera_name = "Logi Group Camera"
 
-# Create device
 device = PTZDevice.GetDevice(camera_name, PTZType.Relative)
 
-# Print zoom info
 print("Zoom range:", device.ZoomMin, "to", device.ZoomMax, "step:", device.ZoomStep)
-
-# Move camera
-#device.Move(50, 0)   # pan right
-#device.Move(0, 50)   # tilt down
-
-#print("New zoom:", device.Zoom(1))
-#print("New zoom:", device.Zoom(-1))
 
 root = Tk()
 root.title("PTZ Controller")
